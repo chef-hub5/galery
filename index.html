@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Gallery</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&amp;display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Playfair Display', serif; }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app" class="h-full w-full bg-stone-100 overflow-auto">
+   <div class="max-w-4xl mx-auto px-6 py-12">
+    <header class="text-center mb-12">
+     <h1 id="gallery-title" class="text-4xl font-semibold text-stone-800 mb-2">My Gallery</h1>
+     <p class="text-stone-500">A collection of moments</p>
+    </header>
+    <main class="grid grid-cols-2 md:grid-cols-3 gap-4">
+     <div class="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><img src="g/Sophia 1.jpg" alt="Mountain landscape at sunrise" loading="lazy" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #d6bcfa 0%, #9f7aea 100%)'; this.alt='Image unavailable';">
+     </div>
+     <div class="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&amp;h=400&amp;fit=crop" alt="Forest path with sunlight" loading="lazy" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #9ae6b4 0%, #38a169 100%)'; this.alt='Image unavailable';">
+     </div>
+     <div class="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&amp;h=400&amp;fit=crop" alt="Tropical beach with clear water" loading="lazy" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #90cdf4 0%, #3182ce 100%)'; this.alt='Image unavailable';">
+     </div>
+     <div class="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&amp;h=400&amp;fit=crop" alt="Sunlit forest clearing" loading="lazy" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #faf089 0%, #d69e2e 100%)'; this.alt='Image unavailable';">
+     </div>
+     <div class="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=400&amp;h=400&amp;fit=crop" alt="Waterfall in misty mountains" loading="lazy" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #bee3f8 0%, #4299e1 100%)'; this.alt='Image unavailable';">
+     </div>
+     <div class="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&amp;h=400&amp;fit=crop" alt="Rolling hills at dawn" loading="lazy" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #fbd38d 0%, #ed8936 100%)'; this.alt='Image unavailable';">
+     </div>
+    </main>
+    <footer class="text-center mt-12 text-stone-400 text-sm">
+     <p>Click and drag to explore</p>
+    </footer>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      gallery_title: "My Gallery",
+      background_color: "#f5f5f4",
+      text_color: "#292524"
+    };
+
+    async function onConfigChange(config) {
+      document.getElementById('gallery-title').textContent = config.gallery_title || defaultConfig.gallery_title;
+      document.getElementById('app').style.backgroundColor = config.background_color || defaultConfig.background_color;
+      document.getElementById('gallery-title').style.color = config.text_color || defaultConfig.text_color;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["gallery_title", config.gallery_title || defaultConfig.gallery_title]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d5edeb6236fd56f',t:'MTc3MjQzODQ0OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
